@@ -1,3 +1,4 @@
+import 'package:adopt_app/providers/auth_provider.dart';
 import 'package:adopt_app/providers/pets_provider.dart';
 import 'package:adopt_app/widgets/pet_card.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,41 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Pet Adopt"),
       ),
+      drawer: Drawer(
+          child: context.watch<AuthProvider>().isAuth
+              ? ListView(
+                  padding: EdgeInsets.zero,
+                  children: [
+                    DrawerHeader(
+                      child: Text(
+                          "Welcome ${context.watch<AuthProvider>().user.username}"),
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text("Logout"),
+                      trailing: const Icon(Icons.logout),
+                      onTap: () {},
+                    ),
+                  ],
+                )
+              : ListView(
+                  children: [
+                    ListTile(
+                      title: Text("SignUP NOW !!!"),
+                      onTap: () {
+                        context.push("/signup");
+                      },
+                    ),
+                    ListTile(
+                      title: Text("Sign In Dear :)"),
+                      onTap: () {
+                        context.push("/signin");
+                      },
+                    ),
+                  ],
+                )),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
